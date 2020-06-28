@@ -1,0 +1,258 @@
+(function euler004() {
+
+  var n = 999 * 999;
+  var nSayi;
+  var nSayiTrsbolen;
+  var carpan;
+  var bolen;
+
+  while (n > 100000) {
+
+    nSayi = n + '';
+    nSayiTrsbolen = nSayi.split('').reverse().join('');
+
+    if (nSayi === nSayiTrsbolen) {
+
+      carpan = Math.sqrt(n);
+
+      bolen = Math.floor(carpan);
+      while (n % bolen !== 0 && bolen >= 100 && n / bolen <= 999) {
+
+        bolen--;
+      }
+
+      if (n % bolen === 0 && bolen >= 100 && n / bolen <= 999) {
+        // return the answer
+        console.log(n);
+        return n;
+      }
+    }
+
+    n--;
+  }
+}());
+
+
+function permutate(n, array) {
+    const al = array.length
+    for (let i = 0; i < n - 1; i++) {
+      let k, l
+      for (let j = 0; j < al - 1; j++) {
+        if (array[j] < array[j + 1]) {
+          k = j
+        }
+      }
+      for (let j = k; j < al; j++) {
+        if (array[k] < array[j]) {
+          l = j
+        }
+      }
+      let tmp = array[k]
+      array[k] = array[l]
+      array[l] = tmp
+      let begin = k + 1
+      let end = al - 1
+      while (begin < end) {
+        tmp = array[begin]
+        array[begin] = array[end]
+        array[end] = tmp
+        begin += 1
+        end -= 1
+      }
+    }
+    return array
+  }
+  console.log(permutate(1000000, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).join(""))
+
+
+
+var faktoriel = [1,1,2,6,24,120,720,5040,40320,362880];
+var toplam = 0;
+
+for(var i = 3; i < 10000000; i++){
+    var sayiStr = String(i);
+    var length = sayiStr.length;
+    var toplam1 = 0;
+    for(var hane = 0; hane < length; hane++){
+        if(toplam1 > i){break;} 
+        toplam1 += faktoriel[parseInt(sayiStr[hane])];
+    }
+
+    if(toplam1 == i){
+        console.log(i);
+        toplam += toplam1;
+    }
+}
+
+console.log(toplam);
+
+
+
+
+
+
+function besgen(n){return n*(3*n-1)/2;}
+
+function buyukmu(value,n){
+  var pn = besgen(n);
+  while(pn > value){
+    pn = besgen(n);
+    n--;
+  }
+  if(pn == value){return true;}
+  return false;
+}
+
+function kucukmu(value,n){
+  var pn = besgen(n);
+  while(pn < value){
+    pn = besgen(n);
+    n++;
+  }
+  if(pn == value){return true;}
+  return false;
+}
+
+var max = 10000;
+for(var j = 1; j < max; j++){
+  for(var k = j+1; k < max; k++){
+    if(kucukmu(besgen(j)+besgen(k),k)&&buyukmu(besgen(k)-besgen(j),k)){
+      console.log(besgen(k)-besgen(j));
+      return;  
+    }
+  }
+}
+
+
+
+
+
+
+function collatz(bolen) {
+  if(bolen % 2 == 0) {
+    return bolen / 2;
+  }
+  else {
+    return (bolen * 3) + 1;
+  }
+}
+
+function collatzsıra(bolen) {
+  var counter = 1;
+  while(bolen != 1) {
+    bolen = collatz(bolen);
+    counter++;
+  }
+  return counter;
+}
+
+function longest_chain(bolen) {
+  var max = 0;
+  var max_index;
+    
+  for(var i=1; i<bolen; i++) {
+    var sıra = collatzsıra(i);
+    if(sıra > max) {
+      max = sıra;
+      max_index = i;
+    }
+  }
+  return max_index;
+}
+
+console.log(longest_chain(1000000));
+
+
+
+
+
+
+
+var Asalsayilar = function(n) {
+    var say = 0;
+    var Asal = [];
+    for (var i = 2; i < n; i++) Asal[i] = true;
+    for (var i = 2; i * i < n; i++) {
+        if (Asal[i]) {
+            var start = i * i;
+            while (start <= n) {
+                Asal[start] = false;
+                start = start + i;
+            }
+        }
+    }
+    for (var j = 2; j < n; j++) {
+        if (Asal[j]) say++;
+    }
+
+    return say;
+}; 
+
+
+
+
+
+
+@param {TreeNode} root
+* @return {number}
+*/
+var maxDerinlik = function(root) {
+ if (root === null) return 0;
+ else {
+   let sol = maxDepth(root.left);
+   let sag = maxDepth(root.right);
+   return Math.max(sol, sag) + 1;
+ }
+};
+
+
+
+
+
+
+
+/**
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function(s) {
+     s.reverse();
+    
+};
+
+
+
+
+
+
+
+/**
+ * @param {sayi[]} numara
+ * @return {sayi}
+ */
+ var maxProduct = function(numara) {
+  const siranumara = numara.map(a=>a-1).sort((a,b) => b-a)
+  return siranumara[0]*siranumara[1]
+};
+
+
+
+
+
+
+
+* @param {string} date
+* @return {number}
+*/
+
+const dayOfYear = function(date) {
+ const [year, month, day] = date.split('-').map(s => +s),
+   months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+   isLeapYear = !(year % 4) && month > 2 && (!!(year % 100) || !(year % 400))
+ return months.splice(0, month - 1).reduce((a, b) => a + b, day + +isLeapYear)
+}
+
+
+
+
+
